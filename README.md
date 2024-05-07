@@ -12,6 +12,14 @@ This package is suitable for you if you need to perform some queries on:
 * Perform Limit, Offset
 * Perform Aggregate Query (count, sum, avg, max, min)
 
+## Installation
+
+To install the package, you can use [Composer](https://getcomposer.org/):
+
+```bash
+composer require ruhulfbr/csvqry
+```
+
 ## Basic Usage
 
 To instantiate the CSVQ do the following:
