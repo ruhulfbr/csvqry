@@ -9,7 +9,7 @@
 
 namespace Ruhul\CSVQuery\Closure;
 
-class LimitClosure extends AbstractClosure
+class LimitClosure
 {
     /**
      * Filters the results based on a limit array.
@@ -38,8 +38,8 @@ class LimitClosure extends AbstractClosure
      * This method slices the results array based on the offset and length specified
      * in the limit array.
      *
-     * @param array $results     The array of results to slice.
-     * @param array $limit  The array specifying the offset and length of the slice.
+     * @param array $results The array of results to slice.
+     * @param array $limit The array specifying the offset and length of the slice.
      *
      * @return array The sliced results array.
      */

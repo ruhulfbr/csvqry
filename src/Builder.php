@@ -12,7 +12,6 @@
 namespace Ruhul\CSVQuery;
 
 use Exception;
-use Ruhul\CSVQuery\Closure\JoinClosure;
 use Ruhul\CSVQuery\Closure\LimitClosure;
 use Ruhul\CSVQuery\Closure\SortingClosure;
 use Ruhul\CSVQuery\Closure\SelectClosure;
@@ -101,8 +100,7 @@ abstract class Builder
             return [];
         }
 
-        $results = JoinClosure::apply($this->_data, $this->_join);
-        $results = WhereClosure::apply($results, $this->_where, $this->_or_where);
+        $results = WhereClosure::apply($this->_data, $this->_where, $this->_or_where);
         $results = LimitClosure::apply($results, $this->_limit);
         $results = SortingClosure::apply($results, $this->_order);
         return SelectClosure::apply($results, $this->_columns);
@@ -358,28 +356,6 @@ abstract class Builder
         }
 
         $this->_columns = array_unique($this->_columns);
-        return $this;
-    }
-
-
-    /**
-     * Perform a join operation with another array.
-     *
-     * @param array $array The array to join.
-     * @param string $arrayName The name to assign to the joined array.
-     * @param string $parentKey The key in the current array to join on.
-     * @param string $foreignKey The key in the joined array to join on.
-     * @return $this Returns the instance of the class to allow method chaining.
-     */
-    public function join(array $array, string $arrayName, string $parentKey, string $foreignKey): static
-    {
-        $this->_join[] = [
-            'array' => $array,
-            'arrayName' => $arrayName,
-            'parentKey' => $parentKey,
-            'foreignKey' => $foreignKey
-        ];
-
         return $this;
     }
 

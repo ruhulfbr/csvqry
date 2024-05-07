@@ -11,7 +11,7 @@ namespace Ruhul\CSVQuery\Closure;
 
 use Ruhul\CSVQuery\Closure\Conditions\ClosureInterface;
 
-class WhereClosure extends AbstractClosure
+class WhereClosure
 {
     /**
      * Apply where filtering to the array.

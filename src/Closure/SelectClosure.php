@@ -9,7 +9,7 @@
 
 namespace Ruhul\CSVQuery\Closure;
 
-class SelectClosure extends AbstractClosure
+class SelectClosure
 {
     /**
      * Apply where filtering to the array.
