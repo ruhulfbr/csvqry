@@ -16,13 +16,6 @@ class SortingClosure
     public const ARRAY_SEPARATOR = '.';
 
     /**
-     * Mapping of supported sorting operators.
-     *
-     * This array maps supported sorting operators to their corresponding values.
-     * These operators are used to specify the sorting order in queries or operations.
-     * Supported operators include ASC (ascending), DESC (descending), DATE_ASC (ascending by date),
-     * and DATE_DESC (descending by date).
-     *
      * @var array
      */
     public static array $operatorsMap = [
@@ -62,11 +55,6 @@ class SortingClosure
 
 
     /**
-     * Sorts the results array based on the provided sorting criteria.
-     *
-     * This method sorts the results array based on the specified key and order in the sorting criteria.
-     * Optionally, it supports sorting dates based on a specified date format.
-     *
      * @param array $results The array of results to sort.
      * @param array $sortingArray The array specifying the sorting criteria.
      *
