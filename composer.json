@@ -1,0 +1,50 @@
+{
+  "name": "ruhulfbr/csvqry",
+  "description": "Make data retrieval query on CSV like laravel `Query Builder`",
+  "version": "1.0.0",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "files": [
+      "src/utility/helper.php"
+    ],
+    "psr-4": {
+      "Ruhul\\CSVQuery\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Ruhul\\CSVQuery\\Tests\\": "Tests/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Md Ruhul Amin",
+      "email": "ruhul11bd@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^8.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~9.6"
+  },
+  "keywords": [
+    "csv",
+    "csvqry",
+    "json",
+    "jsonq",
+    "arrayq",
+    "csvq",
+    "sql",
+    "query",
+    "row",
+    "data",
+    "conversion",
+    "array",
+    "php",
+    "php8",
+    "composer",
+    "package"
+  ]
+}
