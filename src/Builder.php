@@ -13,13 +13,13 @@ namespace Ruhul\CSVQuery;
 
 use Exception;
 use Ruhul\CSVQuery\Closure\LimitClosure;
-use Ruhul\CSVQuery\Closure\SortingClosure;
 use Ruhul\CSVQuery\Closure\SelectClosure;
+use Ruhul\CSVQuery\Closure\SortingClosure;
 use Ruhul\CSVQuery\Closure\WhereClosure;
+use Ruhul\CSVQuery\Exceptions\ColumnNotFoundException;
 use Ruhul\CSVQuery\Exceptions\InvalidAggregateColumnException;
 use Ruhul\CSVQuery\Exceptions\InvalidDateStringException;
 use Ruhul\CSVQuery\Exceptions\InvalidSortingKeyException;
-use Ruhul\CSVQuery\Exceptions\ColumnNotFoundException;
 use Ruhul\CSVQuery\Exceptions\InvalidSortingOperatorException;
 use Ruhul\CSVQuery\Exceptions\InvalidWhereOperatorException;
 use Ruhul\CSVQuery\Exceptions\MultipleSortingOperationException;
@@ -51,11 +51,6 @@ abstract class Builder
      * @var array
      */
     private array $_limit = [];
-
-    /**
-     * @var array
-     */
-    private array $_join = [];
 
     /**
      * Constructor to initialize the class instance with an array.
@@ -329,10 +324,9 @@ abstract class Builder
 
 
     /** ================ Apply Closures =====================
-     * @throws ColumnNotFoundException
-     */
-
-    /**
+     *
+     *
+     * /**
      * Select columns to include in the query.
      *
      * @param array|string $columns Columns to select. Default is ['*'] (all columns).
@@ -366,9 +360,8 @@ abstract class Builder
      * @param string $operator The comparison operator.
      * @param mixed $value The value to compare against.
      * @return static Returns the instance of the class to allow method chaining.
-     * @throws InvalidWhereOperatorException If the provided operator is invalid.
      * @throws ColumnNotFoundException
-     *
+     * @throws InvalidWhereOperatorException If the provided operator is invalid.
      */
     public function where(string $column, string $operator, mixed $value = null): static
     {
