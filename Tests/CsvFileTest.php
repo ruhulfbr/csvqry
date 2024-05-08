@@ -14,6 +14,7 @@ use Exception;
 use PHPUnit\Framework\TestCase;
 use Ruhul\CSVQuery\CSVQ;
 use Ruhul\CSVQuery\Exceptions\EmptyCsvFileException;
+use Ruhul\CSVQuery\Exceptions\EmptyCsvHeaderException;
 use Ruhul\CSVQuery\Exceptions\FileTypeNotAllowedException;
 use Ruhul\CSVQuery\Exceptions\InvalidFilePathException;
 
@@ -50,6 +51,20 @@ class CsvFileTest extends TestCase
     }
 
     /**
+     * @test Expect Exception EmptyCsvHeaderException
+     * @throws Exception
+     */
+    public function it_ThrowEmptyCsvHeaderException()
+    {
+        $filePath = 'Tests/files/data-empty-header.csv';
+
+        $this->expectException(EmptyCsvHeaderException::class);
+        $this->expectExceptionMessage("CSV header is empty, the first row consider as header/columns. `" . $filePath . "`");
+
+        CSVQ::from($filePath);
+    }
+
+    /**
      * @test Expect Exception EmptyCsvFileException
      * @throws Exception
      */
@@ -58,7 +73,7 @@ class CsvFileTest extends TestCase
         $filePath = 'Tests/files/data-empty.csv';
 
         $this->expectException(EmptyCsvFileException::class);
-        $this->expectExceptionMessage("The CSV file `$filePath` is empty.");
+        $this->expectExceptionMessage("No data found in the CSV file. `" . $filePath . "`");
 
         CSVQ::from($filePath);
     }

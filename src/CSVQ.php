@@ -14,6 +14,7 @@ namespace Ruhul\CSVQuery;
 use Exception;
 use Generator;
 use Ruhul\CSVQuery\Exceptions\EmptyCsvFileException;
+use Ruhul\CSVQuery\Exceptions\EmptyCsvHeaderException;
 use Ruhul\CSVQuery\Exceptions\FileTypeNotAllowedException;
 use Ruhul\CSVQuery\Exceptions\InvalidFilePathException;
 
@@ -45,10 +46,8 @@ class CSVQ extends Builder
         $this->_filePath = $filePath;
         $this->extractCSVData();
 
-        // Throw exception if the CSV file is empty
-        if (empty($this->_fields) && empty($this->_data)) {
-            throw new EmptyCsvFileException("The CSV file `" . $this->_filePath . "` is empty.");
-        }
+        // Check has data for next step
+        $this->checkHasData();
 
         parent::__construct($this->_data, $this->_fields);
     }
@@ -70,23 +69,12 @@ class CSVQ extends Builder
     }
 
     /**
-     * @throws Exception
-     */
-    public function extractCSVData(): void
-    {
-        foreach ($this->parseCSV() as $rowData) {
-            $this->_data[] = $rowData;
-        }
-    }
-
-
-    /**
      * Extracts column names and data rows from the CSV file.
      *
-     * @return Generator True if extraction is successful, false otherwise.
+     * @return void True if extraction is successful, false otherwise.
      * @throws Exception
      */
-    private function parseCSV(): Generator
+    private function extractCSVData(): void
     {
         $this->validateFile();
 
@@ -101,8 +89,7 @@ class CSVQ extends Builder
                 continue;
             }
 
-            //$this->_data[] = $this->prepareDataArray($row);
-            yield $this->prepareDataArray($row);
+            $this->_data[] = $this->prepareDataArray($row);
         }
 
         // Close the file handle
@@ -142,6 +129,26 @@ class CSVQ extends Builder
         $extension = pathinfo($this->_filePath, PATHINFO_EXTENSION);
         if (strtolower($extension) !== 'csv') {
             throw new FileTypeNotAllowedException("File type not allowed: " . $extension);
+        }
+    }
+
+    /**
+     * Check if the CSV file has data or not.
+     * Throws exceptions if the CSV file header is empty or if the file is empty.
+     *
+     * @throws EmptyCsvHeaderException When the CSV header is empty.
+     * @throws EmptyCsvFileException   When the CSV file is empty.
+     */
+    private function checkHasData(): void
+    {
+        // Throw exception if the CSV file is empty
+        if (empty($this->_fields[0]) && empty($this->_data)) {
+            throw new EmptyCsvFileException("No data found in the CSV file. `" . $this->_filePath . "`");
+        }
+
+        // Throw exception if the CSV file header is empty
+        if (empty($this->_fields[0])) {
+            throw new EmptyCsvHeaderException("CSV header is empty, the first row consider as header/columns. `" . $this->_filePath . "`");
         }
     }
 }
