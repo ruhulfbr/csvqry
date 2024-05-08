@@ -67,7 +67,7 @@ abstract class Builder
      * @param array $fields
      * @return static Returns a new instance of the class.
      */
-    public static function init(array $data, array $fields): static
+    protected static function init(array $data, array $fields): static
     {
         return new static($data, $fields);
     }
