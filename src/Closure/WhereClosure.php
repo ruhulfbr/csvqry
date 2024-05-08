@@ -27,15 +27,19 @@ class WhereClosure
             return $data;
         }
 
-        return array_filter($data, function ($element) use ($where, $orWhere) {
-            $matchesWhere = self::matchesConditions($element, $where);
-
-            if (!$matchesWhere && !empty($orWhere)) {
-                return self::matchesConditions($element, $orWhere);
+        $results = [];
+        foreach ($data as $row) {
+            $matches = self::matchesConditions($row, $where);
+            if (!$matches && !empty($orWhere)) {
+                $matches = self::matchesConditions($row, $orWhere);
             }
 
-            return $matchesWhere;
-        });
+            if ($matches) {
+                $results[] = $row;
+            }
+        }
+
+        return $results;
     }
 
     /**
