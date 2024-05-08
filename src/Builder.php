@@ -96,8 +96,8 @@ abstract class Builder
         }
 
         $results = WhereClosure::apply($this->_data, $this->_where, $this->_or_where);
-        $results = LimitClosure::apply($results, $this->_limit);
         $results = SortingClosure::apply($results, $this->_order);
+        $results = LimitClosure::apply($results, $this->_limit);
         return SelectClosure::apply($results, $this->_columns);
     }
 
@@ -217,7 +217,7 @@ abstract class Builder
      */
     public function sum(string $column): int|float
     {
-        if (!$this->isValidColumn($column)) {
+        if (!$this->isValidColumn($column) || !$this->isValidAggColumn($column)) {
             throw new InvalidAggregateColumnException("Unsupported Aggregate Columns: `" . $column . "`.");
         }
 
@@ -240,12 +240,12 @@ abstract class Builder
      *
      * @param string $column The key of the numeric field for which to calculate the average.
      * @return int|float The average value of the specified field.
-     * @throws ColumnNotFoundException If the provided key is invalid.
+     * @throws InvalidAggregateColumnException|ColumnNotFoundException
      */
     public function avg(string $column): int|float
     {
-        if (!$this->isValidColumn($column)) {
-            throw new ColumnNotFoundException("Invalid average operation field-key: `" . $column . "`.");
+        if (!$this->isValidColumn($column) || !$this->isValidAggColumn($column)) {
+            throw new InvalidAggregateColumnException("Unsupported Aggregate Columns: `" . $column . "`.");
         }
 
         $results = $this->get();
@@ -274,7 +274,7 @@ abstract class Builder
      */
     public function min(string $column): array
     {
-        if (!$this->isValidColumn($column)) {
+        if (!$this->isValidColumn($column) || !$this->isValidAggColumn($column)) {
             throw new InvalidAggregateColumnException("Unsupported Aggregate Columns: `" . $column . "`.");
         }
 
@@ -303,7 +303,7 @@ abstract class Builder
      */
     public function max(string $column): array
     {
-        if (!$this->isValidColumn($column)) {
+        if (!$this->isValidColumn($column) || !$this->isValidAggColumn($column)) {
             throw new InvalidAggregateColumnException("Unsupported Aggregate Columns: `" . $column . "`.");
         }
 
@@ -515,7 +515,6 @@ abstract class Builder
     /* ================= private Methods =================== */
 
     /**
-     * Checks if the provided operator is valid.
      *
      * @param string $column
      * @return bool True if the operator is valid, false otherwise.
@@ -527,6 +526,20 @@ abstract class Builder
         }
 
         return true;
+    }
+
+    /**
+     *
+     * @param string $column
+     * @return bool
+     */
+    private function isValidAggColumn(string $column): bool
+    {
+        if (in_array("*", $this->_columns) || in_array($column, $this->_columns)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
