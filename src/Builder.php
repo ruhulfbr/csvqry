@@ -531,7 +531,7 @@ abstract class Builder
     /**
      *
      * @param string $column
-     * @return bool True if the operator is valid, false otherwise.
+     * @return bool
      */
     private function isValidAggColumn(string $column): bool
     {
