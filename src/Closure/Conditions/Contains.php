@@ -23,7 +23,7 @@ class Contains implements ClosureInterface
      */
     public function match($value, $valueToCompare, $dateFormat = null): bool
     {
-        return stripos($value, $valueToCompare) !== false;
+        return str_contains($value, $valueToCompare);
     }
 
 }

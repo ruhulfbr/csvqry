@@ -23,11 +23,7 @@ class EndsWith implements ClosureInterface
      */
     public function match($value, $valueToCompare, $dateFormat = null): bool
     {
-        $valueToCompareLength = strlen($valueToCompare);
-        $valueLength = strlen($value);
-        $valueEnd = substr($value, ($valueLength - $valueToCompareLength), $valueToCompareLength);
-
-        return $valueToCompare === $valueEnd;
+        return str_ends_with($value, $valueToCompare);
     }
 
 }

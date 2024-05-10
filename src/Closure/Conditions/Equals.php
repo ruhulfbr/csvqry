@@ -23,7 +23,7 @@ class Equals implements ClosureInterface
      */
     public function match($value, $valueToCompare, $dateFormat = null): bool
     {
-        return $value === $valueToCompare;
+        return $value == $valueToCompare;
     }
 
 }

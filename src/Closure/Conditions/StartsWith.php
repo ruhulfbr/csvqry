@@ -21,9 +21,6 @@ class StartsWith implements ClosureInterface
      */
     public function match($value, $valueToCompare, $dateFormat = null): bool
     {
-        $valueToCompareLength = strlen($valueToCompare);
-        $valueHead = substr($value, 0, $valueToCompareLength);
-
-        return $valueToCompare === $valueHead;
+        return str_starts_with($value, $valueToCompare);
     }
 }
